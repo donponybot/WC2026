@@ -1,0 +1,7 @@
+[allowlist]
+  description = "Firebase and football-data keys are intentionally public in frontend bundles"
+  regexes = [
+    "REACT_APP_FB_API_KEY",
+    "REACT_APP_FD_API_KEY",
+    "AIzaSy",
+  ]
