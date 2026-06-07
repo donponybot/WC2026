@@ -173,7 +173,8 @@ export default function Predictions({
     }
     return STAGE.FINAL;
   });
-  const [editingInitials, setEditingInitials] = useState(null);
+  const [editingPlayer, setEditingPlayer] = useState(null);   // { id, name, initials }
+  const [confirmRemove, setConfirmRemove] = useState(null);   // player object
   const [changingPasswordFor, setChangingPasswordFor] = useState(null);
 
   const knockoutResults = koResultsProp;
@@ -272,23 +273,52 @@ export default function Predictions({
                 return (
                   <tr key={p.id} className={`${idx % 2 === 0 ? 'row-even' : 'row-odd'} ${isMe ? 'my-row' : ''}`}>
                     <td className="player-name-cell sticky-col">
-                      <div className="player-cell-inner">
-                        <span>{p.name} {isMe && <span className="you-badge">{t(lang,'you')}</span>}</span>
-                        {isAdmin && (
-                          <div className="admin-player-actions">
-                            <button
-                              className="btn-pw"
-                              onClick={() => setChangingPasswordFor(p)}
-                              title={t(lang,'changePassword')}
-                            >🔑</button>
-                            <button
-                              className="btn-remove-player"
-                              onClick={() => onRemovePlayer(p.id)}
-                              title="Remove player"
-                            >✕</button>
-                          </div>
-                        )}
-                      </div>
+                      {isAdmin && editingPlayer?.id === p.id ? (
+                        <div className="player-edit-form">
+                          <input
+                            className="player-edit-name"
+                            value={editingPlayer.name}
+                            onChange={e => setEditingPlayer(ep => ({ ...ep, name: e.target.value }))}
+                            placeholder="Name"
+                            autoFocus
+                          />
+                          <input
+                            className="player-edit-initials"
+                            value={editingPlayer.initials}
+                            onChange={e => setEditingPlayer(ep => ({ ...ep, initials: e.target.value.toUpperCase() }))}
+                            placeholder="Init"
+                            maxLength={4}
+                          />
+                          <button className="btn-edit-save" onClick={async () => {
+                            await onUpdatePlayer(p.id, { name: editingPlayer.name.trim(), initials: editingPlayer.initials.trim() });
+                            setEditingPlayer(null);
+                          }}>✓</button>
+                          <button className="btn-edit-cancel" onClick={() => setEditingPlayer(null)}>✕</button>
+                        </div>
+                      ) : (
+                        <div className="player-cell-inner">
+                          <span>{p.name} {isMe && <span className="you-badge">{t(lang,'you')}</span>}</span>
+                          {isAdmin && (
+                            <div className="admin-player-actions">
+                              <button
+                                className="btn-pw"
+                                onClick={() => setEditingPlayer({ id: p.id, name: p.name, initials: p.initials })}
+                                title="Edit name / initials"
+                              >✏️</button>
+                              <button
+                                className="btn-pw"
+                                onClick={() => setChangingPasswordFor(p)}
+                                title={t(lang,'changePassword')}
+                              >🔑</button>
+                              <button
+                                className="btn-remove-player"
+                                onClick={() => setConfirmRemove(p)}
+                                title="Remove player"
+                              >🗑️</button>
+                            </div>
+                          )}
+                        </div>
+                      )}
                       {isAdmin && changingPasswordFor?.id === p.id && (
                         <ChangePasswordForm
                           player={p}
@@ -300,22 +330,7 @@ export default function Predictions({
                     </td>
 
                     <td className="initials-cell sticky-col2">
-                      {isAdmin && editingInitials === p.id ? (
-                        <input
-                          value={p.initials}
-                          maxLength={4}
-                          onChange={e => onUpdatePlayer(p.id, { initials: e.target.value.toUpperCase() })}
-                          onBlur={() => setEditingInitials(null)}
-                          autoFocus
-                          className="initials-input"
-                        />
-                      ) : (
-                        <span
-                          className="initials-display"
-                          onClick={() => isAdmin && setEditingInitials(p.id)}
-                          title={isAdmin ? 'Click to edit' : ''}
-                        >{p.initials}</span>
-                      )}
+                      <span className="initials-display">{p.initials}</span>
                     </td>
 
                     {filteredMatches.map(m => (
@@ -369,6 +384,27 @@ export default function Predictions({
                 </div>
               );
             })}
+          </div>
+        </div>
+      )}
+
+      {/* Confirm remove modal */}
+      {confirmRemove && (
+        <div className="modal-overlay" onClick={() => setConfirmRemove(null)}>
+          <div className="modal" onClick={e => e.stopPropagation()}>
+            <h3>🗑️ Remove Player</h3>
+            <p>Are you sure you want to remove <strong>{confirmRemove.name}</strong>?</p>
+            <p style={{fontSize:'0.85rem',color:'var(--gray-500)'}}>
+              This will delete all their predictions and cannot be undone.
+              Consider creating a backup first.
+            </p>
+            <div className="modal-actions">
+              <button
+                className="btn-danger"
+                onClick={async () => { await onRemovePlayer(confirmRemove.id); setConfirmRemove(null); }}
+              >Remove</button>
+              <button className="btn-secondary" onClick={() => setConfirmRemove(null)}>Cancel</button>
+            </div>
           </div>
         </div>
       )}

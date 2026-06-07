@@ -12,6 +12,7 @@ import { deriveQualifiedTeams, calcPlayerTotal, buildKnockoutResults } from './u
 import { hashPassword } from './utils/auth';
 import { ensurePoolExists, subscribePool, savePlayers, saveResults, saveOneResult } from './utils/firestore';
 import { LangProvider, useLang } from './utils/LangContext';
+import BackupManager from './components/BackupManager';
 import { t } from './utils/i18n';
 
 const ADMIN_PASSWORD = process.env.REACT_APP_ADMIN_PASSWORD || 'wc2026admin';
@@ -134,6 +135,10 @@ function AppInner() {
   async function handleResultOverride(matchId, r) {
     await saveOneResult(matchId, { ...r, manualOverride: true });
   }
+  async function handleRestore(restoredPlayers, restoredResults) {
+    await savePlayers(restoredPlayers);
+    await saveResults(restoredResults);
+  }
 
   const leaderboard = players
     .map(p => ({ ...p, total: calcPlayerTotal(p, results, champion) }))
@@ -208,6 +213,18 @@ function AppInner() {
         {tab === 4 && <News lang={lang} />}
         {tab === 5 && <Rules lang={lang} />}
       </main>
+
+      {/* Backup manager — admin only, shown below main content on every tab */}
+      {isAdmin && (
+        <div style={{ maxWidth: 1400, margin: '0 auto', padding: '0 20px 40px' }}>
+          <BackupManager
+            players={players}
+            results={results}
+            onRestore={handleRestore}
+            lang={lang}
+          />
+        </div>
+      )}
 
       {showAdminModal && <AdminModal onLogin={handleAdminLogin} onClose={() => setShowAdminModal(false)} lang={lang} />}
       {showPlayerModal && <PlayerLoginModal players={players} onLogin={handlePlayerLogin} onClose={() => setShowPlayerModal(false)} lang={lang} />}
