@@ -57,6 +57,13 @@ header {
 
 .header-actions { display: flex; align-items: center; gap: 8px; }
 
+.btn-icon {
+  background: transparent; border: none; cursor: pointer;
+  font-size: 1.2rem; padding: 6px; border-radius: 50%;
+  transition: background 0.2s;
+}
+.btn-icon:hover { background: rgba(255,255,255,0.1); }
+
 .btn-admin {
   background: rgba(255,255,255,0.1);
   border: 1px solid rgba(255,255,255,0.2);
@@ -323,6 +330,13 @@ main { flex: 1; padding: 20px; max-width: 1400px; margin: 0 auto; width: 100%; }
   color: var(--gold);
   font-weight: 700;
 }
+.initials-display { cursor: pointer; }
+.initials-input {
+  width: 50px; background: transparent; border: 1px solid var(--gold);
+  color: var(--gold); text-align: center; font-weight: 700;
+  border-radius: 3px; padding: 2px;
+}
+
 .pred-cell { min-width: 110px; }
 .pred-cell.editable { padding: 4px 6px; }
 .pred-cell.pts-pos  { background: var(--green-bg) !important; }
@@ -886,6 +900,14 @@ main { flex: 1; padding: 20px; max-width: 1400px; margin: 0 auto; width: 100%; }
   cursor: pointer; font-size: 0.85rem;
 }
 
+/* Danger button (reused from backup) */
+.btn-danger {
+  flex: 1; padding: 10px; background: #dc2626; color: white;
+  border: none; border-radius: 6px; cursor: pointer;
+  font-size: 0.95rem; font-weight: 600;
+}
+.btn-danger:hover { background: #b91c1c; }
+
 /* ── Cog inside admin badge ─────────────────────────────────────────── */
 .btn-icon-inline {
   background: transparent; border: none; cursor: pointer;
@@ -966,4 +988,166 @@ main { flex: 1; padding: 20px; max-width: 1400px; margin: 0 auto; width: 100%; }
   .prize-content { padding: 18px 16px; }
   .prize-amount  { font-size: 2.6rem; }
   .prize-trophy  { font-size: 2rem; }
+}
+
+/* ── Lineup Panel ───────────────────────────────────────────────────── */
+.team-clickable {
+  cursor: pointer; transition: opacity 0.15s, transform 0.15s;
+  border-radius: 6px; padding: 2px 4px; margin: -2px -4px;
+}
+.team-clickable:hover {
+  opacity: 0.75; transform: scale(1.04);
+  background: rgba(15,52,96,0.06);
+  text-decoration: underline;
+}
+
+.lineup-overlay {
+  position: fixed; inset: 0; z-index: 500;
+  background: rgba(0,0,0,0.65);
+  display: flex; align-items: center; justify-content: center;
+  padding: 16px;
+  animation: fadeIn 0.15s;
+}
+
+.lineup-panel {
+  background: var(--white); border-radius: 12px;
+  width: 100%; max-width: 380px;
+  max-height: 92vh; overflow-y: auto;
+  box-shadow: 0 24px 60px rgba(0,0,0,0.4);
+  animation: slideUp 0.2s ease-out;
+}
+@keyframes slideUp {
+  from { transform: translateY(20px); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+
+.lineup-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 16px 18px; border-radius: 12px 12px 0 0; color: white;
+}
+.lineup-header-left { display: flex; align-items: center; gap: 12px; }
+.lineup-team-name { font-size: 1.2rem; font-weight: 700; }
+.lineup-meta { font-size: 0.8rem; opacity: 0.85; margin-top: 2px; display: flex; align-items: center; gap: 8px; }
+.lineup-live-badge {
+  background: rgba(255,255,255,0.2); border-radius: 8px;
+  padding: 1px 7px; font-size: 0.72rem; font-weight: 600;
+  animation: pulse 1.5s infinite;
+}
+.lineup-close {
+  background: rgba(255,255,255,0.2); border: none; color: white;
+  width: 30px; height: 30px; border-radius: 50%;
+  cursor: pointer; font-size: 0.85rem;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.lineup-close:hover { background: rgba(255,255,255,0.35); }
+
+.lineup-pitch-wrap {
+  padding: 12px 12px 4px;
+  background: #1a6e3c;
+}
+.lineup-pitch-svg {
+  width: 100%; height: auto; display: block;
+  border-radius: 6px; overflow: hidden;
+}
+
+.lineup-player-list {
+  padding: 10px 14px;
+  display: flex; flex-direction: column; gap: 4px;
+}
+.lineup-player-row {
+  display: flex; align-items: center; gap: 10px;
+  padding: 5px 8px; border-radius: 6px;
+  background: var(--gray-50);
+  font-size: 0.88rem;
+}
+.lineup-player-row:hover { background: var(--gray-100); }
+.lineup-player-no {
+  width: 26px; height: 26px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  color: white; font-size: 0.78rem; font-weight: 700;
+  flex-shrink: 0;
+}
+.lineup-player-name { flex: 1; color: var(--dark); font-weight: 500; }
+.lineup-player-pos {
+  font-size: 0.72rem; font-weight: 600; color: var(--gray-500);
+  background: var(--gray-200); border-radius: 4px;
+  padding: 2px 6px;
+}
+
+.lineup-loading {
+  display: flex; flex-direction: column; align-items: center;
+  gap: 12px; padding: 40px; color: var(--gray-500);
+}
+.lineup-disclaimer {
+  text-align: center; font-size: 0.78rem; color: var(--gray-500);
+  padding: 8px 14px 14px; font-style: italic;
+}
+
+@media (max-width: 420px) {
+  .lineup-panel { max-width: 100%; border-radius: 16px 16px 0 0; }
+  .lineup-overlay { align-items: flex-end; padding: 0; }
+}
+
+/* ── Lineup panel additions ─────────────────────────────────────────── */
+.lineup-view-toggle {
+  display: flex; border-radius: 16px; overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.3);
+}
+.lineup-view-toggle button {
+  background: rgba(255,255,255,0.1); border: none;
+  color: white; padding: 5px 10px; cursor: pointer;
+  font-size: 0.9rem; transition: background 0.15s;
+}
+.lineup-view-toggle button.active { background: rgba(255,255,255,0.35); }
+.lineup-view-toggle button:hover  { background: rgba(255,255,255,0.2); }
+
+/* Player card (selected on pitch) */
+.lineup-player-card {
+  display: flex; align-items: center; gap: 14px;
+  margin: 10px 14px; padding: 12px 14px;
+  background: var(--gray-50); border-radius: 10px;
+  border: 1px solid var(--gray-200);
+  animation: fadeIn 0.15s;
+}
+.lineup-player-card-photo {
+  width: 56px; height: 56px; border-radius: 50%;
+  overflow: hidden; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+}
+.lineup-player-card-img {
+  width: 100%; height: 100%; object-fit: cover; object-position: top;
+}
+.lineup-player-card-info { flex: 1; min-width: 0; }
+.lineup-player-card-no { font-size: 1.4rem; font-weight: 800; }
+.lineup-player-card-name { font-size: 1rem; font-weight: 700; color: var(--dark); }
+.lineup-player-card-meta { display: flex; align-items: center; gap: 8px; margin-top: 4px; }
+.lineup-player-card-shirt { font-size: 0.82rem; color: var(--gray-500); }
+
+/* List view */
+.lineup-list-view { padding: 8px 0; }
+.lineup-list-row {
+  display: flex; align-items: center; gap: 12px;
+  padding: 8px 14px; transition: background 0.1s;
+}
+.lineup-list-row:hover { background: var(--gray-50); }
+.lineup-list-photo {
+  width: 38px; height: 38px; border-radius: 50%;
+  overflow: hidden; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+}
+.lineup-list-photo-img {
+  width: 100%; height: 100%; object-fit: cover; object-position: top;
+}
+
+.lineup-tap-hint {
+  text-align: center; font-size: 0.78rem;
+  color: var(--gray-500); padding: 8px 0 4px;
+  font-style: italic;
+}
+
+/* Pos badge color override in lineup */
+.lineup-player-pos {
+  font-size: 0.68rem; font-weight: 700; color: white !important;
+  border-radius: 4px; padding: 2px 6px;
 }

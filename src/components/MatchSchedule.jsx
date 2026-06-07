@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { MATCHES, STAGE } from '../data/matches';
 import { resolveTeam } from '../utils/scoring';
 import FlagImg from './FlagImg';
+import LineupPanel from './LineupPanel';
 
 const STAGE_COLORS = {
   [STAGE.GROUP]: '#0f3460',
@@ -41,6 +42,7 @@ export default function MatchSchedule({ results, qualifiedTeams, koResults = {},
   });
   const [editingMatch, setEditingMatch] = useState(null);
   const [editScore, setEditScore] = useState({ home: '', away: '' });
+  const [lineup, setLineup] = useState(null); // { team, match }
 
   const stages = ['all', ...Object.values(STAGE)];
   const filtered = filterStage === 'all' ? MATCHES : MATCHES.filter(m => m.stage === filterStage);
@@ -112,7 +114,10 @@ export default function MatchSchedule({ results, qualifiedTeams, koResults = {},
                   </span>
 
                   <div className="match-row">
-                    <span className={`team home-team ${result?.isFinished && result.homeScore > result.awayScore ? 'winner' : ''}`}>
+                    <span
+                      className={`team home-team ${result?.isFinished && result.homeScore > result.awayScore ? 'winner' : ''} ${homeTeam !== 'TBD' ? 'team-clickable' : ''}`}
+                      onClick={homeTeam !== 'TBD' ? () => setLineup({ team: homeTeam, match }) : undefined}
+                    >
                       {homeTeam !== 'TBD' ? <><FlagImg team={homeTeam} size={24} style={{marginRight:6}} />{homeTeam}</> : homeTeam}
                     </span>
 
@@ -156,7 +161,10 @@ export default function MatchSchedule({ results, qualifiedTeams, koResults = {},
                       )}
                     </div>
 
-                    <span className={`team away-team ${result?.isFinished && result.awayScore > result.homeScore ? 'winner' : ''}`}>
+                    <span
+                      className={`team away-team ${result?.isFinished && result.awayScore > result.homeScore ? 'winner' : ''} ${awayTeam !== 'TBD' ? 'team-clickable' : ''}`}
+                      onClick={awayTeam !== 'TBD' ? () => setLineup({ team: awayTeam, match }) : undefined}
+                    >
                       {awayTeam !== 'TBD' ? <><FlagImg team={awayTeam} size={24} style={{marginRight:6}} />{awayTeam}</> : awayTeam}
                     </span>
                   </div>
@@ -175,6 +183,14 @@ export default function MatchSchedule({ results, qualifiedTeams, koResults = {},
           </div>
         </div>
       ))}
+
+      {lineup && (
+        <LineupPanel
+          team={lineup.team}
+          match={lineup.match}
+          onClose={() => setLineup(null)}
+        />
+      )}
     </div>
   );
 }
