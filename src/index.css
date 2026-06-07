@@ -57,13 +57,6 @@ header {
 
 .header-actions { display: flex; align-items: center; gap: 8px; }
 
-.btn-icon {
-  background: transparent; border: none; cursor: pointer;
-  font-size: 1.2rem; padding: 6px; border-radius: 50%;
-  transition: background 0.2s;
-}
-.btn-icon:hover { background: rgba(255,255,255,0.1); }
-
 .btn-admin {
   background: rgba(255,255,255,0.1);
   border: 1px solid rgba(255,255,255,0.2);
@@ -891,4 +884,86 @@ main { flex: 1; padding: 20px; max-width: 1400px; margin: 0 auto; width: 100%; }
   background: rgba(255,255,255,0.15); color: white; border: none;
   border-radius: 4px; padding: 4px 8px;
   cursor: pointer; font-size: 0.85rem;
+}
+
+/* ── Cog inside admin badge ─────────────────────────────────────────── */
+.btn-icon-inline {
+  background: transparent; border: none; cursor: pointer;
+  font-size: 1rem; padding: 2px 4px; opacity: 0.7;
+  transition: opacity 0.2s, transform 0.3s;
+  line-height: 1;
+}
+.btn-icon-inline:hover { opacity: 1; transform: rotate(60deg); }
+
+/* ── Prize banner ───────────────────────────────────────────────────── */
+.prize-banner {
+  position: relative; overflow: hidden;
+  border-radius: 16px; margin-bottom: 28px;
+  background: linear-gradient(135deg, #1a1200 0%, #3d2c00 40%, #1a1200 100%);
+  border: 2px solid #B7860B;
+  box-shadow: 0 0 30px rgba(183,134,11,0.4), inset 0 0 60px rgba(183,134,11,0.1);
+  animation: prizePulse 3s ease-in-out infinite;
+}
+
+@keyframes prizePulse {
+  0%, 100% { box-shadow: 0 0 20px rgba(183,134,11,0.3), inset 0 0 40px rgba(183,134,11,0.08); }
+  50%       { box-shadow: 0 0 50px rgba(183,134,11,0.7), inset 0 0 80px rgba(183,134,11,0.2); }
+}
+
+/* Sweeping shine effect */
+.prize-shine {
+  position: absolute; top: 0; left: -100%;
+  width: 60%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,215,0,0.15), transparent);
+  animation: prizeShine 2.5s ease-in-out infinite;
+  pointer-events: none;
+}
+@keyframes prizeShine {
+  0%   { left: -100%; }
+  60%  { left: 150%; }
+  100% { left: 150%; }
+}
+
+.prize-content {
+  position: relative; z-index: 1;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 24px 32px; gap: 20px;
+}
+
+.prize-trophy { font-size: 2.8rem; animation: trophyBounce 2s ease-in-out infinite; }
+@keyframes trophyBounce {
+  0%, 100% { transform: translateY(0) rotate(-5deg); }
+  50%       { transform: translateY(-6px) rotate(5deg); }
+}
+
+.prize-text { text-align: center; flex: 1; }
+
+.prize-label {
+  font-size: 0.85rem; font-weight: 600; letter-spacing: 3px;
+  text-transform: uppercase; color: #c9a227; margin-bottom: 6px;
+}
+
+.prize-amount {
+  font-size: 3.5rem; font-weight: 900; line-height: 1;
+  background: linear-gradient(180deg, #FFD700 0%, #FFA500 40%, #FFD700 70%, #B8860B 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: drop-shadow(0 2px 8px rgba(255,215,0,0.5));
+  animation: prizeGlow 2s ease-in-out infinite;
+  letter-spacing: -1px;
+}
+@keyframes prizeGlow {
+  0%, 100% { filter: drop-shadow(0 2px 8px rgba(255,215,0,0.4)); }
+  50%       { filter: drop-shadow(0 2px 20px rgba(255,215,0,0.9)); }
+}
+
+.prize-sub {
+  font-size: 0.82rem; color: #c9a227; margin-top: 6px;
+  opacity: 0.8; letter-spacing: 1px;
+}
+
+@media (max-width: 480px) {
+  .prize-content { padding: 18px 16px; }
+  .prize-amount  { font-size: 2.6rem; }
+  .prize-trophy  { font-size: 2rem; }
 }

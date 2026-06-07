@@ -1,10 +1,25 @@
 import { useState } from 'react';
 import { t } from '../utils/i18n';
 
-export function Rules({ lang = 'en' }) {
+export function Rules({ lang = 'en', playerCount = 0 }) {
   return (
     <div className="rules-tab">
       <h2>{t(lang,'rulesTitle')}</h2>
+
+      {/* Prize pool banner */}
+      <div className="prize-banner">
+        <div className="prize-shine" />
+        <div className="prize-content">
+          <div className="prize-trophy">🏆</div>
+          <div className="prize-text">
+            <div className="prize-label">Winner Takes All</div>
+            <div className="prize-amount">{playerCount > 0 ? `£${playerCount * 20}` : '£20 per player'}</div>
+            <div className="prize-sub">£20 entry · {playerCount > 0 ? `${playerCount} players` : 'per player'}</div>
+          </div>
+          <div className="prize-trophy">🏆</div>
+        </div>
+      </div>
+
       <div className="rules-section">
         <h3>{t(lang,'championRuleTitle')}</h3>
         <p>{t(lang,'championRuleDesc')}</p>

@@ -183,11 +183,14 @@ function AppInner() {
             </div>
 
             {apiError && <span className="api-error" title={apiError}>⚠️ API</span>}
-            <button className="btn-icon" onClick={() => setShowApiKeyModal(true)} title={t(lang,'apiSettings')}>⚙️</button>
 
             {currentUser ? (
               <div className="logged-in-badge">
                 <span>{isAdmin ? `🔓 Admin` : `👤 ${currentUser}`}</span>
+                {/* Cog only visible to admin */}
+                {isAdmin && (
+                  <button className="btn-icon-inline" onClick={() => setShowApiKeyModal(true)} title={t(lang,'apiSettings')}>⚙️</button>
+                )}
                 <button className="logout-btn" onClick={isAdmin ? handleAdminLogout : handlePlayerLogout} title={t(lang,'logout')}>✕</button>
               </div>
             ) : (
@@ -211,7 +214,7 @@ function AppInner() {
         {tab === 2 && <Leaderboard leaderboard={leaderboard} results={results} champion={champion} lang={lang} />}
         {tab === 3 && <Bracket results={results} qualifiedTeams={qualifiedTeams} koResults={koResults} lang={lang} />}
         {tab === 4 && <News lang={lang} />}
-        {tab === 5 && <Rules lang={lang} />}
+        {tab === 5 && <Rules lang={lang} playerCount={players.length} />}
       </main>
 
       {/* Backup manager — admin only, shown below main content on every tab */}
