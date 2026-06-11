@@ -153,6 +153,7 @@ export default function Bracket({ results, qualifiedTeams = {}, koResults = {}, 
   });
 
   const r32   = MATCHES.filter(m => m.stage === STAGE.R32);
+  const r16   = MATCHES.filter(m => m.stage === STAGE.R16);
   const qf    = MATCHES.filter(m => m.stage === STAGE.QF);
   const sf    = MATCHES.filter(m => m.stage === STAGE.SF);
   const tp    = MATCHES.filter(m => m.stage === STAGE.THIRD);
@@ -195,16 +196,18 @@ export default function Bracket({ results, qualifiedTeams = {}, koResults = {}, 
         <div style={{ overflowX: 'auto', paddingBottom: 12 }}>
           <div style={{ display: 'flex', gap: 24, alignItems: 'flex-start', minWidth: 900 }}>
             <RoundColumn lang={lang} title={t(lang,'roundOf32')} matches={r32.slice(0, 8)} results={results} qualifiedTeams={qualifiedTeams} koResults={koResults} color="#c2410c" />
-            <RoundColumn lang={lang} title={t(lang,'quarterFinal')} matches={qf.slice(0, 4)} results={results} qualifiedTeams={qualifiedTeams} koResults={koResults} color="#7c3aed" />
-            <RoundColumn lang={lang} title={t(lang,'semiFinal')} matches={sf.slice(0, 2)} results={results} qualifiedTeams={qualifiedTeams} koResults={koResults} color="#166534" />
+            <RoundColumn lang={lang} title={t(lang,'roundOf16')} matches={r16.slice(0, 4)} results={results} qualifiedTeams={qualifiedTeams} koResults={koResults} color="#b45309" />
+            <RoundColumn lang={lang} title={t(lang,'quarterFinal')} matches={qf.slice(0, 2)} results={results} qualifiedTeams={qualifiedTeams} koResults={koResults} color="#7c3aed" />
+            <RoundColumn lang={lang} title={t(lang,'semiFinal')} matches={sf.slice(0, 1)} results={results} qualifiedTeams={qualifiedTeams} koResults={koResults} color="#166534" />
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 16, paddingTop: 24 }}>
               <div style={{ fontSize: 11, fontWeight: 500, textTransform: 'uppercase', letterSpacing: 1, color: '#991b1b' }}>{t(lang,'final')}</div>
               {final && <MatchSlot match={final} results={results} qualifiedTeams={qualifiedTeams} koResults={koResults} size="lg" />}
               <div style={{ fontSize: 11, fontWeight: 500, textTransform: 'uppercase', letterSpacing: 1, color: '#854d0e', marginTop: 8 }}>{t(lang,'thirdPlace')}</div>
               {tp[0] && <MatchSlot match={tp[0]} results={results} qualifiedTeams={qualifiedTeams} koResults={koResults} />}
             </div>
-            <RoundColumn lang={lang} title={t(lang,'semiFinal')} matches={sf.slice(2, 4)} results={results} qualifiedTeams={qualifiedTeams} koResults={koResults} color="#166534" />
-            <RoundColumn lang={lang} title={t(lang,'quarterFinal')} matches={qf.slice(4, 8)} results={results} qualifiedTeams={qualifiedTeams} koResults={koResults} color="#7c3aed" />
+            <RoundColumn lang={lang} title={t(lang,'semiFinal')} matches={sf.slice(1, 2)} results={results} qualifiedTeams={qualifiedTeams} koResults={koResults} color="#166534" />
+            <RoundColumn lang={lang} title={t(lang,'quarterFinal')} matches={qf.slice(2, 4)} results={results} qualifiedTeams={qualifiedTeams} koResults={koResults} color="#7c3aed" />
+            <RoundColumn lang={lang} title={t(lang,'roundOf16')} matches={r16.slice(4, 8)} results={results} qualifiedTeams={qualifiedTeams} koResults={koResults} color="#b45309" />
             <RoundColumn lang={lang} title={t(lang,'roundOf32')} matches={r32.slice(8, 16)} results={results} qualifiedTeams={qualifiedTeams} koResults={koResults} color="#c2410c" />
           </div>
         </div>

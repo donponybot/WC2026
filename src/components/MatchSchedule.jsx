@@ -8,6 +8,7 @@ import LineupPanel from './LineupPanel';
 const STAGE_COLORS = {
   [STAGE.GROUP]: '#0f3460',
   [STAGE.R32]:   '#c2410c',
+  [STAGE.R16]:   '#b45309',
   [STAGE.QF]:    '#7c3aed',
   [STAGE.SF]:    '#166534',
   [STAGE.THIRD]: '#854d0e',
@@ -17,6 +18,7 @@ const STAGE_COLORS = {
 function STAGE_LABELS(lang) { return {
   [STAGE.GROUP]: t(lang,'groupStage'),
   [STAGE.R32]:   t(lang,'roundOf32'),
+  [STAGE.R16]:   t(lang,'roundOf16'),
   [STAGE.QF]:    t(lang,'quarterFinal'),
   [STAGE.SF]:    t(lang,'semiFinal'),
   [STAGE.THIRD]: t(lang,'thirdPlace'),
@@ -32,7 +34,7 @@ function getTeamName(match, side, qualifiedTeams, knockoutResults) {
 
 export default function MatchSchedule({ results, qualifiedTeams, koResults = {}, isAdmin, onResultOverride, lang = 'en' }) {
   const [filterStage, setFilterStage] = useState(() => {
-    const stages = [STAGE.GROUP, STAGE.R32, STAGE.QF, STAGE.SF, STAGE.THIRD, STAGE.FINAL];
+    const stages = [STAGE.GROUP, STAGE.R32, STAGE.R16, STAGE.QF, STAGE.SF, STAGE.THIRD, STAGE.FINAL];
     const now = Date.now();
     for (const stage of stages) {
       const hasUpcoming = MATCHES.some(m => m.stage === stage && now < new Date(m.kickoff).getTime());
