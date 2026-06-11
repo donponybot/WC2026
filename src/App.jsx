@@ -73,8 +73,6 @@ function AppInner() {
 
   // Live scores polling
   const pollScores = useCallback(async () => {
-    const apiKey = localStorage.getItem('fd_api_key') || '';
-    if (!apiKey) return;
     try {
       const apiMatches = await fetchLiveMatches();
       const mapped = mapApiResults(apiMatches, MATCHES);
