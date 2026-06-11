@@ -38,11 +38,11 @@ export const MATCHES = [
 
   // Thu Jun 11
   { id:'gs1',  date:'Jun 11', kickoff:'2026-06-11T19:00:00Z', group:'A', home:'Mexico',        away:'South Africa',         venue:'Estadio Azteca, Mexico City',       stage:STAGE.GROUP },
-  { id:'gs2',  date:'Jun 11', kickoff:'2026-06-12T02:00:00Z', group:'A', home:'South Korea',   away:'Czechia',              venue:'Estadio Akron, Zapopan',            stage:STAGE.GROUP },
+  { id:'gs2',  date:'Jun 12', kickoff:'2026-06-12T02:00:00Z', group:'A', home:'South Korea',   away:'Czechia',              venue:'Estadio Akron, Zapopan',            stage:STAGE.GROUP },
 
   // Fri Jun 12
   { id:'gs3',  date:'Jun 12', kickoff:'2026-06-12T19:00:00Z', group:'B', home:'Canada',        away:'Bosnia & Herzegovina', venue:'BMO Field, Toronto',                stage:STAGE.GROUP },
-  { id:'gs4',  date:'Jun 12', kickoff:'2026-06-13T01:00:00Z', group:'D', home:'USA',           away:'Paraguay',             venue:'SoFi Stadium, Los Angeles',         stage:STAGE.GROUP },
+  { id:'gs4',  date:'Jun 13', kickoff:'2026-06-13T01:00:00Z', group:'D', home:'USA',           away:'Paraguay',             venue:'SoFi Stadium, Los Angeles',         stage:STAGE.GROUP },
 
   // Sat Jun 13
   { id:'gs5',  date:'Jun 13', kickoff:'2026-06-13T19:00:00Z', group:'B', home:'Qatar',         away:'Switzerland',          venue:'Levi\'s Stadium, San Francisco',    stage:STAGE.GROUP },
@@ -53,7 +53,7 @@ export const MATCHES = [
   { id:'gs8',  date:'Jun 14', kickoff:'2026-06-14T04:00:00Z', group:'D', home:'Australia',     away:'Türkiye',              venue:'BC Place, Vancouver',               stage:STAGE.GROUP },
   { id:'gs9',  date:'Jun 14', kickoff:'2026-06-14T17:00:00Z', group:'E', home:'Germany',       away:'Curaçao',              venue:'NRG Stadium, Houston',              stage:STAGE.GROUP },
   { id:'gs10', date:'Jun 14', kickoff:'2026-06-14T20:00:00Z', group:'F', home:'Netherlands',   away:'Japan',                venue:'AT&T Stadium, Dallas',              stage:STAGE.GROUP },
-  { id:'gs11', date:'Jun 14', kickoff:'2026-06-14T23:00:00Z', group:'E', home:'Ivory Coast',   away:'Ecuador',              venue:'Lincoln Financial Field, Philadelphia', stage:STAGE.GROUP },
+  { id:'gs11', date:'Jun 15', kickoff:'2026-06-14T23:00:00Z', group:'E', home:'Ivory Coast',   away:'Ecuador',              venue:'Lincoln Financial Field, Philadelphia', stage:STAGE.GROUP },
   { id:'gs12', date:'Jun 15', kickoff:'2026-06-15T02:00:00Z', group:'F', home:'Sweden',        away:'Tunisia',              venue:'Estadio BBVA, Monterrey',           stage:STAGE.GROUP },
 
   // Mon Jun 15
@@ -71,7 +71,7 @@ export const MATCHES = [
   { id:'gs20', date:'Jun 17', kickoff:'2026-06-17T04:00:00Z', group:'J', home:'Austria',       away:'Jordan',               venue:'Levi\'s Stadium, San Francisco',    stage:STAGE.GROUP },
   { id:'gs21', date:'Jun 17', kickoff:'2026-06-17T17:00:00Z', group:'K', home:'Portugal',      away:'Congo DR',             venue:'NRG Stadium, Houston',              stage:STAGE.GROUP },
   { id:'gs22', date:'Jun 17', kickoff:'2026-06-17T20:00:00Z', group:'L', home:'England',       away:'Croatia',              venue:'AT&T Stadium, Dallas',              stage:STAGE.GROUP },
-  { id:'gs23', date:'Jun 17', kickoff:'2026-06-17T23:00:00Z', group:'L', home:'Ghana',         away:'Panama',               venue:'BMO Field, Toronto',                stage:STAGE.GROUP },
+  { id:'gs23', date:'Jun 18', kickoff:'2026-06-17T23:00:00Z', group:'L', home:'Ghana',         away:'Panama',               venue:'BMO Field, Toronto',                stage:STAGE.GROUP },
   { id:'gs24', date:'Jun 18', kickoff:'2026-06-18T02:00:00Z', group:'K', home:'Uzbekistan',    away:'Colombia',             venue:'Estadio Azteca, Mexico City',       stage:STAGE.GROUP },
 
   // Thu Jun 18
@@ -107,7 +107,7 @@ export const MATCHES = [
   // Tue Jun 23
   { id:'gs45', date:'Jun 23', kickoff:'2026-06-23T17:00:00Z', group:'K', home:'Portugal',      away:'Uzbekistan',           venue:'NRG Stadium, Houston',              stage:STAGE.GROUP },
   { id:'gs46', date:'Jun 23', kickoff:'2026-06-23T20:00:00Z', group:'L', home:'England',       away:'Ghana',                venue:'Gillette Stadium, Boston',          stage:STAGE.GROUP },
-  { id:'gs47', date:'Jun 23', kickoff:'2026-06-23T23:00:00Z', group:'L', home:'Panama',        away:'Croatia',              venue:'BMO Field, Toronto',                stage:STAGE.GROUP },
+  { id:'gs47', date:'Jun 24', kickoff:'2026-06-23T23:00:00Z', group:'L', home:'Panama',        away:'Croatia',              venue:'BMO Field, Toronto',                stage:STAGE.GROUP },
   { id:'gs48', date:'Jun 24', kickoff:'2026-06-24T02:00:00Z', group:'K', home:'Colombia',      away:'Congo DR',             venue:'Estadio Akron, Zapopan',            stage:STAGE.GROUP },
 
   // Wed Jun 24 — Final matchday Groups A, B, C (simultaneous)
@@ -121,8 +121,8 @@ export const MATCHES = [
   // Thu Jun 25 — Final matchday Groups D, E, F (simultaneous)
   { id:'gs55', date:'Jun 25', kickoff:'2026-06-25T20:00:00Z', group:'E', home:'Curaçao',       away:'Ivory Coast',          venue:'Lincoln Financial Field, Philadelphia', stage:STAGE.GROUP },
   { id:'gs56', date:'Jun 25', kickoff:'2026-06-25T20:00:00Z', group:'E', home:'Ecuador',       away:'Germany',              venue:'MetLife Stadium, New York/NJ',      stage:STAGE.GROUP },
-  { id:'gs57', date:'Jun 25', kickoff:'2026-06-25T23:00:00Z', group:'F', home:'Japan',         away:'Sweden',               venue:'AT&T Stadium, Dallas',              stage:STAGE.GROUP },
-  { id:'gs58', date:'Jun 25', kickoff:'2026-06-25T23:00:00Z', group:'F', home:'Tunisia',       away:'Netherlands',          venue:'Arrowhead Stadium, Kansas City',    stage:STAGE.GROUP },
+  { id:'gs57', date:'Jun 26', kickoff:'2026-06-25T23:00:00Z', group:'F', home:'Japan',         away:'Sweden',               venue:'AT&T Stadium, Dallas',              stage:STAGE.GROUP },
+  { id:'gs58', date:'Jun 26', kickoff:'2026-06-25T23:00:00Z', group:'F', home:'Tunisia',       away:'Netherlands',          venue:'Arrowhead Stadium, Kansas City',    stage:STAGE.GROUP },
   { id:'gs59', date:'Jun 26', kickoff:'2026-06-26T02:00:00Z', group:'D', home:'Türkiye',       away:'USA',                  venue:'SoFi Stadium, Los Angeles',         stage:STAGE.GROUP },
   { id:'gs60', date:'Jun 26', kickoff:'2026-06-26T02:00:00Z', group:'D', home:'Paraguay',      away:'Australia',            venue:'Levi\'s Stadium, San Francisco',    stage:STAGE.GROUP },
 
@@ -137,8 +137,8 @@ export const MATCHES = [
   // Sat Jun 27 — Final matchday Groups J, K, L (simultaneous)
   { id:'gs67', date:'Jun 27', kickoff:'2026-06-27T21:00:00Z', group:'L', home:'Panama',        away:'England',              venue:'MetLife Stadium, New York/NJ',      stage:STAGE.GROUP },
   { id:'gs68', date:'Jun 27', kickoff:'2026-06-27T21:00:00Z', group:'L', home:'Croatia',       away:'Ghana',                venue:'Lincoln Financial Field, Philadelphia', stage:STAGE.GROUP },
-  { id:'gs69', date:'Jun 27', kickoff:'2026-06-27T23:30:00Z', group:'K', home:'Colombia',      away:'Portugal',             venue:'Hard Rock Stadium, Miami',           stage:STAGE.GROUP },
-  { id:'gs70', date:'Jun 27', kickoff:'2026-06-27T23:30:00Z', group:'K', home:'Congo DR',      away:'Uzbekistan',           venue:'Mercedes-Benz Stadium, Atlanta',    stage:STAGE.GROUP },
+  { id:'gs69', date:'Jun 28', kickoff:'2026-06-27T23:30:00Z', group:'K', home:'Colombia',      away:'Portugal',             venue:'Hard Rock Stadium, Miami',           stage:STAGE.GROUP },
+  { id:'gs70', date:'Jun 28', kickoff:'2026-06-27T23:30:00Z', group:'K', home:'Congo DR',      away:'Uzbekistan',           venue:'Mercedes-Benz Stadium, Atlanta',    stage:STAGE.GROUP },
   { id:'gs71', date:'Jun 28', kickoff:'2026-06-28T02:00:00Z', group:'J', home:'Algeria',       away:'Austria',              venue:'Arrowhead Stadium, Kansas City',    stage:STAGE.GROUP },
   { id:'gs72', date:'Jun 28', kickoff:'2026-06-28T02:00:00Z', group:'J', home:'Jordan',        away:'Argentina',            venue:'AT&T Stadium, Dallas',              stage:STAGE.GROUP },
 
@@ -146,42 +146,42 @@ export const MATCHES = [
   { id:'r32_1',  date:'Jun 28', kickoff:'2026-06-28T19:00:00Z', group:'–', home:null, away:null, homeRef:'2A', awayRef:'2B',         venue:'SoFi Stadium, Los Angeles',            stage:STAGE.R32 },
   { id:'r32_2',  date:'Jun 29', kickoff:'2026-06-29T17:00:00Z', group:'–', home:null, away:null, homeRef:'1C', awayRef:'2F',         venue:'NRG Stadium, Houston',                 stage:STAGE.R32 },
   { id:'r32_3',  date:'Jun 29', kickoff:'2026-06-29T20:30:00Z', group:'–', home:null, away:null, homeRef:'1E', awayRef:'3ABCDF',     venue:'Gillette Stadium, Boston',             stage:STAGE.R32 },
-  { id:'r32_4',  date:'Jun 29', kickoff:'2026-06-30T01:00:00Z', group:'–', home:null, away:null, homeRef:'1F', awayRef:'2C',         venue:'Estadio BBVA, Monterrey',              stage:STAGE.R32 },
+  { id:'r32_4',  date:'Jun 30', kickoff:'2026-06-30T01:00:00Z', group:'–', home:null, away:null, homeRef:'1F', awayRef:'2C',         venue:'Estadio BBVA, Monterrey',              stage:STAGE.R32 },
   { id:'r32_5',  date:'Jun 30', kickoff:'2026-06-30T17:00:00Z', group:'–', home:null, away:null, homeRef:'2E', awayRef:'2I',         venue:'AT&T Stadium, Dallas',                 stage:STAGE.R32 },
   { id:'r32_6',  date:'Jun 30', kickoff:'2026-06-30T21:00:00Z', group:'–', home:null, away:null, homeRef:'1I', awayRef:'3CDFGH',     venue:'MetLife Stadium, New York/NJ',         stage:STAGE.R32 },
-  { id:'r32_7',  date:'Jun 30', kickoff:'2026-07-01T01:00:00Z', group:'–', home:null, away:null, homeRef:'1A', awayRef:'3CEFI',      venue:'Estadio Azteca, Mexico City',          stage:STAGE.R32 },
+  { id:'r32_7',  date:'Jul 1',  kickoff:'2026-07-01T01:00:00Z', group:'–', home:null, away:null, homeRef:'1A', awayRef:'3CEFI',      venue:'Estadio Azteca, Mexico City',          stage:STAGE.R32 },
   { id:'r32_8',  date:'Jul 1',  kickoff:'2026-07-01T16:00:00Z', group:'–', home:null, away:null, homeRef:'1L', awayRef:'3EHIJK',     venue:'Mercedes-Benz Stadium, Atlanta',       stage:STAGE.R32 },
   { id:'r32_9',  date:'Jul 1',  kickoff:'2026-07-01T20:00:00Z', group:'–', home:null, away:null, homeRef:'1G', awayRef:'3AEHIJ',     venue:'Lumen Field, Seattle',                 stage:STAGE.R32 },
   { id:'r32_10', date:'Jul 2',  kickoff:'2026-07-02T00:00:00Z', group:'–', home:null, away:null, homeRef:'1D', awayRef:'3BEFIJ',     venue:'Levi\'s Stadium, San Francisco',       stage:STAGE.R32 },
   { id:'r32_11', date:'Jul 2',  kickoff:'2026-07-02T19:00:00Z', group:'–', home:null, away:null, homeRef:'1H', awayRef:'2J',         venue:'SoFi Stadium, Los Angeles',            stage:STAGE.R32 },
-  { id:'r32_12', date:'Jul 2',  kickoff:'2026-07-02T23:00:00Z', group:'–', home:null, away:null, homeRef:'2K', awayRef:'2L',         venue:'BMO Field, Toronto',                   stage:STAGE.R32 },
+  { id:'r32_12', date:'Jul 3',  kickoff:'2026-07-02T23:00:00Z', group:'–', home:null, away:null, homeRef:'2K', awayRef:'2L',         venue:'BMO Field, Toronto',                   stage:STAGE.R32 },
   { id:'r32_13', date:'Jul 3',  kickoff:'2026-07-03T03:00:00Z', group:'–', home:null, away:null, homeRef:'1B', awayRef:'3EFGIJ',     venue:'BC Place, Vancouver',                  stage:STAGE.R32 },
   { id:'r32_14', date:'Jul 3',  kickoff:'2026-07-03T18:00:00Z', group:'–', home:null, away:null, homeRef:'2D', awayRef:'2G',         venue:'AT&T Stadium, Dallas',                 stage:STAGE.R32 },
   { id:'r32_15', date:'Jul 3',  kickoff:'2026-07-03T22:00:00Z', group:'–', home:null, away:null, homeRef:'1J', awayRef:'2H',         venue:'Hard Rock Stadium, Miami',             stage:STAGE.R32 },
   { id:'r32_16', date:'Jul 4',  kickoff:'2026-07-04T01:30:00Z', group:'–', home:null, away:null, homeRef:'1K', awayRef:'3DEIJL',     venue:'Arrowhead Stadium, Kansas City',       stage:STAGE.R32 },
 
   // ── ROUND OF 16 (Jul 4 – Jul 7) ─────────────────────────────────────────
-  { id:'r16_1', date:'Jul 4',  kickoff:'2026-07-04T17:00:00Z', group:'–', home:null, away:null, homeRef:'Wr32_1',  awayRef:'Wr32_4',  venue:'NRG Stadium, Houston',                 stage:STAGE.R16 },
-  { id:'r16_2', date:'Jul 4',  kickoff:'2026-07-04T21:00:00Z', group:'–', home:null, away:null, homeRef:'Wr32_2',  awayRef:'Wr32_6',  venue:'Lincoln Financial Field, Philadelphia', stage:STAGE.R16 },
-  { id:'r16_3', date:'Jul 5',  kickoff:'2026-07-05T17:00:00Z', group:'–', home:null, away:null, homeRef:'Wr32_3',  awayRef:'Wr32_5',  venue:'MetLife Stadium, New York/NJ',         stage:STAGE.R16 },
-  { id:'r16_4', date:'Jul 5',  kickoff:'2026-07-05T21:00:00Z', group:'–', home:null, away:null, homeRef:'Wr32_7',  awayRef:'Wr32_8',  venue:'SoFi Stadium, Los Angeles',            stage:STAGE.R16 },
-  { id:'r16_5', date:'Jul 6',  kickoff:'2026-07-06T17:00:00Z', group:'–', home:null, away:null, homeRef:'Wr32_9',  awayRef:'Wr32_11', venue:'AT&T Stadium, Dallas',                 stage:STAGE.R16 },
-  { id:'r16_6', date:'Jul 6',  kickoff:'2026-07-06T21:00:00Z', group:'–', home:null, away:null, homeRef:'Wr32_10', awayRef:'Wr32_12', venue:'Lumen Field, Seattle',                 stage:STAGE.R16 },
-  { id:'r16_7', date:'Jul 7',  kickoff:'2026-07-07T17:00:00Z', group:'–', home:null, away:null, homeRef:'Wr32_13', awayRef:'Wr32_15', venue:'Mercedes-Benz Stadium, Atlanta',       stage:STAGE.R16 },
-  { id:'r16_8', date:'Jul 7',  kickoff:'2026-07-07T21:00:00Z', group:'–', home:null, away:null, homeRef:'Wr32_14', awayRef:'Wr32_16', venue:'Arrowhead Stadium, Kansas City',       stage:STAGE.R16 },
+  { id:'r16_1', date:'Jul 4',  kickoff:'2026-07-04T21:00:00Z', group:'–', home:null, away:null, homeRef:'Wr32_3',  awayRef:'Wr32_6',  venue:'Lincoln Financial Field, Philadelphia', stage:STAGE.R16 },
+  { id:'r16_2', date:'Jul 4',  kickoff:'2026-07-04T17:00:00Z', group:'–', home:null, away:null, homeRef:'Wr32_1',  awayRef:'Wr32_4',  venue:'NRG Stadium, Houston',                 stage:STAGE.R16 },
+  { id:'r16_3', date:'Jul 6',  kickoff:'2026-07-06T19:00:00Z', group:'–', home:null, away:null, homeRef:'Wr32_12', awayRef:'Wr32_11', venue:'AT&T Stadium, Dallas',                 stage:STAGE.R16 },
+  { id:'r16_4', date:'Jul 7',  kickoff:'2026-07-07T00:00:00Z', group:'–', home:null, away:null, homeRef:'Wr32_10', awayRef:'Wr32_9',  venue:'Lumen Field, Seattle',                 stage:STAGE.R16 },
+  { id:'r16_5', date:'Jul 5',  kickoff:'2026-07-05T20:00:00Z', group:'–', home:null, away:null, homeRef:'Wr32_2',  awayRef:'Wr32_5',  venue:'MetLife Stadium, New York/NJ',         stage:STAGE.R16 },
+  { id:'r16_6', date:'Jul 6',  kickoff:'2026-07-06T00:00:00Z', group:'–', home:null, away:null, homeRef:'Wr32_7',  awayRef:'Wr32_8',  venue:'Estadio Azteca, Mexico City',          stage:STAGE.R16 },
+  { id:'r16_7', date:'Jul 7',  kickoff:'2026-07-07T16:00:00Z', group:'–', home:null, away:null, homeRef:'Wr32_15', awayRef:'Wr32_14', venue:'Mercedes-Benz Stadium, Atlanta',       stage:STAGE.R16 },
+  { id:'r16_8', date:'Jul 7',  kickoff:'2026-07-07T20:00:00Z', group:'–', home:null, away:null, homeRef:'Wr32_13', awayRef:'Wr32_16', venue:'BC Place, Vancouver',                  stage:STAGE.R16 },
 
-  // ── QUARTER-FINALS (Jul 9 – Jul 11) ─────────────────────────────────────
-  { id:'qf1', date:'Jul 9',  kickoff:'2026-07-09T17:00:00Z', group:'–', home:null, away:null, homeRef:'Wr16_1', awayRef:'Wr16_2', venue:'NRG Stadium, Houston',       stage:STAGE.QF },
-  { id:'qf2', date:'Jul 9',  kickoff:'2026-07-09T21:00:00Z', group:'–', home:null, away:null, homeRef:'Wr16_3', awayRef:'Wr16_4', venue:'MetLife Stadium, New York/NJ',stage:STAGE.QF },
-  { id:'qf3', date:'Jul 10', kickoff:'2026-07-10T17:00:00Z', group:'–', home:null, away:null, homeRef:'Wr16_5', awayRef:'Wr16_6', venue:'AT&T Stadium, Dallas',        stage:STAGE.QF },
-  { id:'qf4', date:'Jul 10', kickoff:'2026-07-10T21:00:00Z', group:'–', home:null, away:null, homeRef:'Wr16_7', awayRef:'Wr16_8', venue:'SoFi Stadium, Los Angeles',   stage:STAGE.QF },
+  // ── QUARTER-FINALS (Jul 9 – Jul 12) ─────────────────────────────────────
+  { id:'qf1', date:'Jul 9',  kickoff:'2026-07-09T20:00:00Z', group:'–', home:null, away:null, homeRef:'Wr16_1', awayRef:'Wr16_2', venue:'Gillette Stadium, Boston',       stage:STAGE.QF },
+  { id:'qf2', date:'Jul 10', kickoff:'2026-07-10T19:00:00Z', group:'–', home:null, away:null, homeRef:'Wr16_3', awayRef:'Wr16_4', venue:'SoFi Stadium, Los Angeles',      stage:STAGE.QF },
+  { id:'qf3', date:'Jul 11', kickoff:'2026-07-11T21:00:00Z', group:'–', home:null, away:null, homeRef:'Wr16_5', awayRef:'Wr16_6', venue:'Hard Rock Stadium, Miami',       stage:STAGE.QF },
+  { id:'qf4', date:'Jul 12', kickoff:'2026-07-12T01:00:00Z', group:'–', home:null, away:null, homeRef:'Wr16_7', awayRef:'Wr16_8', venue:'Arrowhead Stadium, Kansas City', stage:STAGE.QF },
 
   // ── SEMI-FINALS (Jul 14 – Jul 15) ───────────────────────────────────────
-  { id:'sf1', date:'Jul 14', kickoff:'2026-07-14T23:00:00Z', group:'–', home:null, away:null, homeRef:'Wqf1', awayRef:'Wqf2', venue:'MetLife Stadium, New York/NJ', stage:STAGE.SF },
-  { id:'sf2', date:'Jul 15', kickoff:'2026-07-15T23:00:00Z', group:'–', home:null, away:null, homeRef:'Wqf3', awayRef:'Wqf4', venue:'AT&T Stadium, Dallas',          stage:STAGE.SF },
+  { id:'sf1', date:'Jul 14', kickoff:'2026-07-14T19:00:00Z', group:'–', home:null, away:null, homeRef:'Wqf1', awayRef:'Wqf2', venue:'AT&T Stadium, Dallas',          stage:STAGE.SF },
+  { id:'sf2', date:'Jul 15', kickoff:'2026-07-15T19:00:00Z', group:'–', home:null, away:null, homeRef:'Wqf3', awayRef:'Wqf4', venue:'Mercedes-Benz Stadium, Atlanta', stage:STAGE.SF },
 
   // ── THIRD PLACE (Jul 18) ────────────────────────────────────────────────
-  { id:'tp1', date:'Jul 18', kickoff:'2026-07-18T23:00:00Z', group:'–', home:null, away:null, homeRef:'Lsf1', awayRef:'Lsf2', venue:'Hard Rock Stadium, Miami', stage:STAGE.THIRD },
+  { id:'tp1', date:'Jul 18', kickoff:'2026-07-18T21:00:00Z', group:'–', home:null, away:null, homeRef:'Lsf1', awayRef:'Lsf2', venue:'Hard Rock Stadium, Miami', stage:STAGE.THIRD },
 
   // ── FINAL (Jul 19) ──────────────────────────────────────────────────────
   { id:'final', date:'Jul 19', kickoff:'2026-07-19T19:00:00Z', group:'–', home:null, away:null, homeRef:'Wsf1', awayRef:'Wsf2', venue:'MetLife Stadium, New York/NJ', stage:STAGE.FINAL },
