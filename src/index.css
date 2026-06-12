@@ -1151,3 +1151,11 @@ main { flex: 1; padding: 20px; max-width: 1400px; margin: 0 auto; width: 100%; }
   font-size: 0.68rem; font-weight: 700; color: white !important;
   border-radius: 4px; padding: 2px 6px;
 }
+
+/* ── TV channel badge ───────────────────────────────────────────────── */
+.tv-badge {
+  display: inline-flex; align-items: center;
+  padding: 2px 10px; border-radius: 10px;
+  font-size: 0.75rem; font-weight: 600; color: white;
+  letter-spacing: 0.3px; white-space: nowrap;
+}
