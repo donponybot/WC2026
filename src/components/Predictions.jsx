@@ -249,6 +249,11 @@ export default function Predictions({
                   return (
                     <th key={m.id} className={`match-col ${locked ? 'locked-col' : ''}`}>
                       <div className="match-th-date">{m.date}</div>
+                      <div className="match-th-time">
+                        {new Date(m.kickoff).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', timeZone: 'America/New_York' })} ET
+                        {' · '}
+                        {new Date(m.kickoff).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', timeZone: 'Europe/London' })} London
+                      </div>
                       <div className="match-th-teams">{home}<br/>vs<br/>{away}</div>
                       {locked && <div className="lock-indicator">🔒</div>}
                       {m.stage !== STAGE.GROUP && <div className="ko-badge">+Score</div>}
