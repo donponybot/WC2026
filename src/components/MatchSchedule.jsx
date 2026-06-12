@@ -4,7 +4,7 @@ import { MATCHES, STAGE } from '../data/matches';
 import { resolveTeam } from '../utils/scoring';
 import FlagImg from './FlagImg';
 import LineupPanel from './LineupPanel';
-import { UK_TV, channelColor } from '../data/ukTv';
+import { UK_TV, UK_CHANNELS } from '../data/ukTv';
 
 const STAGE_COLORS = {
   [STAGE.GROUP]: '#0f3460',
@@ -175,8 +175,23 @@ export default function MatchSchedule({ results, qualifiedTeams, koResults = {},
                   <div className="match-meta">
                     <span className="venue">📍 {t(lang,'venue')}: {match.venue}</span>
                     {UK_TV[match.id] && (
-                      <span className="tv-badge" style={{ background: channelColor(UK_TV[match.id].channel) }}>
-                        📺 {UK_TV[match.id].channel}
+                      <span className="tv-badges">
+                        {UK_TV[match.id].channels.map(ch => {
+                          const info = UK_CHANNELS[ch];
+                          if (!info) return null;
+                          return (
+                            <a
+                              key={ch}
+                              href={info.link}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="tv-badge-link"
+                              title={`Watch on ${ch}`}
+                            >
+                              <img src={info.logo} alt={ch} className="tv-badge-logo" />
+                            </a>
+                          );
+                        })}
                       </span>
                     )}
                     {isAdmin && !isEditing && (
