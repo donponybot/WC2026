@@ -158,6 +158,8 @@ export default function MatchSchedule({ results, qualifiedTeams, koResults = {},
                           {!hasStarted && (
                             <span className="kickoff-time">
                               {new Date(match.kickoff).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', timeZone: 'America/New_York' })} ET
+                              {' · '}
+                              {new Date(match.kickoff).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', timeZone: 'Europe/London' })} London
                             </span>
                           )}
                         </>
