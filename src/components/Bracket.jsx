@@ -1,6 +1,6 @@
 import { t } from '../utils/i18n';
 import { useState, useMemo } from 'react';
-import { MATCHES, STAGE, GROUP_TEAMS, ALL_TEAMS } from '../data/matches';
+import { MATCHES, STAGE, GROUP_TEAMS } from '../data/matches';
 import FlagImg from './FlagImg';
 import { calcGroupStandings, resolveTeam } from '../utils/scoring';
 
@@ -142,119 +142,53 @@ function GroupCard({ group, teams, results, lang='en' }) {
   );
 }
 
-const STAGE_SHORT = {
-  [STAGE.GROUP]: 'Group',
-  [STAGE.R32]:   'R32',
-  [STAGE.R16]:   'R16',
-  [STAGE.QF]:    'QF',
-  [STAGE.SF]:    'SF',
-  [STAGE.THIRD]: '3rd',
-  [STAGE.FINAL]: 'Final',
-};
-
-function CountryFilter({ results, qualifiedTeams, koResults }) {
-  const [selected, setSelected] = useState('');
-
-  const allTeams = useMemo(() => [...ALL_TEAMS].sort((a, b) => a.localeCompare(b)), []);
-
-  const countryMatches = useMemo(() => {
-    if (!selected) return [];
-    return MATCHES.filter(m => {
-      const home = m.home || m._resolvedHome || resolveTeam(m.homeRef, qualifiedTeams, koResults);
-      const away = m.away || m._resolvedAway || resolveTeam(m.awayRef, qualifiedTeams, koResults);
-      return home === selected || away === selected;
-    });
-  }, [selected, qualifiedTeams, koResults]);
+function GroupMatchRow({ m, results }) {
+  const result = results[m.id];
+  const finished = result?.isFinished;
+  const live = result?.isLive;
 
   return (
-    <div style={{ marginTop: 32, borderTop: '0.5px solid var(--color-border-tertiary)', paddingTop: 20 }}>
-      <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: selected ? 14 : 0, flexWrap: 'wrap' }}>
-        <span style={{ fontSize: 13, fontWeight: 500, color: 'var(--color-text-secondary)' }}>Filter by country:</span>
-        <select
-          value={selected}
-          onChange={e => setSelected(e.target.value)}
-          style={{
-            padding: '5px 10px', borderRadius: 6,
-            border: '0.5px solid var(--color-border-secondary)',
-            background: 'var(--color-background-primary)',
-            color: 'var(--color-text-primary)',
-            fontSize: 13, cursor: 'pointer',
-          }}
-        >
-          <option value="">Select a country…</option>
-          {allTeams.map(team => <option key={team} value={team}>{team}</option>)}
-        </select>
-        {selected && (
-          <button
-            onClick={() => setSelected('')}
-            style={{ background: 'none', border: 'none', color: 'var(--color-text-tertiary)', cursor: 'pointer', fontSize: 14, padding: '2px 6px' }}
-          >✕</button>
+    <div style={{
+      display: 'flex', alignItems: 'center', gap: 10,
+      background: 'var(--color-background-primary)',
+      border: '0.5px solid var(--color-border-tertiary)',
+      borderRadius: 6, padding: '7px 12px',
+    }}>
+      <span style={{ fontSize: 12, color: 'var(--color-text-tertiary)', minWidth: 44, flexShrink: 0 }}>{m.date}</span>
+      <span style={{
+        flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: 5,
+        fontSize: 13, fontWeight: finished && result.homeScore > result.awayScore ? 600 : 400,
+        color: 'var(--color-text-primary)',
+      }}>
+        {m.home}<FlagImg team={m.home} size={16} />
+      </span>
+      <span style={{ minWidth: 52, textAlign: 'center', flexShrink: 0 }}>
+        {finished ? (
+          <span style={{ fontSize: 14, fontWeight: 600, color: 'var(--color-text-primary)', letterSpacing: 1 }}>
+            {result.homeScore}–{result.awayScore}
+          </span>
+        ) : live ? (
+          <span style={{ fontSize: 11, fontWeight: 700, color: '#16a34a' }}>
+            {result.homeScore ?? 0}–{result.awayScore ?? 0}
+          </span>
+        ) : (
+          <span style={{ fontSize: 11, color: 'var(--color-text-tertiary)' }}>vs</span>
         )}
-      </div>
-
-      {selected && countryMatches.length > 0 && (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 5 }}>
-          {countryMatches.map(m => {
-            const home = m.home || m._resolvedHome || resolveTeam(m.homeRef, qualifiedTeams, koResults);
-            const away = m.away || m._resolvedAway || resolveTeam(m.awayRef, qualifiedTeams, koResults);
-            const isHome = home === selected;
-            const opponent = isHome ? away : home;
-            const result = results[m.id];
-            const myScore = result?.isFinished ? (isHome ? result.homeScore : result.awayScore) : null;
-            const oppScore = result?.isFinished ? (isHome ? result.awayScore : result.homeScore) : null;
-            const won = myScore != null && myScore > oppScore;
-            const lost = myScore != null && myScore < oppScore;
-
-            return (
-              <div key={m.id} style={{
-                display: 'flex', alignItems: 'center', gap: 10,
-                background: 'var(--color-background-primary)',
-                border: '0.5px solid var(--color-border-tertiary)',
-                borderRadius: 6, padding: '7px 12px',
-              }}>
-                <span style={{
-                  fontSize: 10, fontWeight: 500, padding: '2px 6px', borderRadius: 4,
-                  background: 'var(--color-background-secondary)',
-                  color: 'var(--color-text-secondary)', minWidth: 44, textAlign: 'center', flexShrink: 0,
-                }}>
-                  {STAGE_SHORT[m.stage] || m.stage}
-                </span>
-                <span style={{ fontSize: 12, color: 'var(--color-text-tertiary)', minWidth: 44, flexShrink: 0 }}>{m.date}</span>
-                <span style={{ flex: 1, display: 'flex', alignItems: 'center', gap: 5, fontSize: 13 }}>
-                  {opponent
-                    ? <><FlagImg team={opponent} size={16} /><span style={{ color: 'var(--color-text-primary)' }}>{opponent}</span></>
-                    : <span style={{ color: 'var(--color-text-tertiary)', fontStyle: 'italic' }}>TBD</span>
-                  }
-                </span>
-                {result?.isFinished ? (
-                  <>
-                    <span style={{
-                      fontSize: 14, fontWeight: 600, minWidth: 36, textAlign: 'right',
-                      color: won ? 'var(--color-text-success)' : lost ? '#dc2626' : 'var(--color-text-secondary)',
-                    }}>
-                      {myScore}–{oppScore}
-                    </span>
-                    <span style={{
-                      fontSize: 10, fontWeight: 700, minWidth: 20, textAlign: 'center', flexShrink: 0,
-                      color: won ? 'var(--color-text-success)' : lost ? '#dc2626' : 'var(--color-text-secondary)',
-                    }}>
-                      {won ? 'W' : lost ? 'L' : 'D'}
-                    </span>
-                  </>
-                ) : result?.isLive ? (
-                  <span style={{ fontSize: 12, fontWeight: 600, color: '#16a34a', minWidth: 56, textAlign: 'right', flexShrink: 0 }}>
-                    {result.minute ? `LIVE ${result.minute}'` : 'LIVE'}
-                  </span>
-                ) : (
-                  <span style={{ fontSize: 12, color: 'var(--color-text-tertiary)', flexShrink: 0 }}>
-                    {new Date(m.kickoff).toLocaleDateString('en-GB', { month: 'short', day: 'numeric' })}
-                  </span>
-                )}
-              </div>
-            );
-          })}
-        </div>
-      )}
+      </span>
+      <span style={{
+        flex: 1, display: 'flex', alignItems: 'center', gap: 5,
+        fontSize: 13, fontWeight: finished && result.awayScore > result.homeScore ? 600 : 400,
+        color: 'var(--color-text-primary)',
+      }}>
+        <FlagImg team={m.away} size={16} />{m.away}
+      </span>
+      <span style={{
+        fontSize: 11, minWidth: 40, textAlign: 'right', flexShrink: 0,
+        color: live ? '#16a34a' : 'var(--color-text-tertiary)',
+        fontWeight: live ? 700 : 400,
+      }}>
+        {live ? (result.minute ? `LIVE ${result.minute}'` : 'LIVE') : finished ? 'FT' : new Date(m.kickoff).toLocaleDateString('en-GB', { month: 'short', day: 'numeric' })}
+      </span>
     </div>
   );
 }
@@ -268,6 +202,7 @@ export default function Bracket({ results, qualifiedTeams = {}, koResults = {}, 
       .every(m => now >= new Date(m.kickoff).getTime());
     return groupsDone ? 'bracket' : 'groups';
   });
+  const [selectedGroup, setSelectedGroup] = useState('A');
 
   const r32   = MATCHES.filter(m => m.stage === STAGE.R32);
   const r16   = MATCHES.filter(m => m.stage === STAGE.R16);
@@ -279,6 +214,11 @@ export default function Bracket({ results, qualifiedTeams = {}, koResults = {}, 
   const champion = koResults['final']?.winner || null;
 
   const groups = Object.keys(GROUP_TEAMS);
+
+  const selectedGroupMatches = useMemo(
+    () => MATCHES.filter(m => m.stage === STAGE.GROUP && m.group === selectedGroup),
+    [selectedGroup]
+  );
 
   return (
     <div style={{ paddingBottom: 40 }}>
@@ -331,14 +271,40 @@ export default function Bracket({ results, qualifiedTeams = {}, koResults = {}, 
       )}
 
       {view === 'groups' && (
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(185px, 1fr))', gap: 12 }}>
-          {groups.map(g => (
-            <GroupCard key={g} group={g} teams={GROUP_TEAMS[g]} results={results} lang={lang} />
-          ))}
+        <div>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(185px, 1fr))', gap: 12 }}>
+            {groups.map(g => (
+              <GroupCard key={g} group={g} teams={GROUP_TEAMS[g]} results={results} lang={lang} />
+            ))}
+          </div>
+
+          <div style={{ marginTop: 28, borderTop: '0.5px solid var(--color-border-tertiary)', paddingTop: 20 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 16, flexWrap: 'wrap' }}>
+              <span style={{ fontSize: 13, fontWeight: 500, color: 'var(--color-text-secondary)' }}>Group matches:</span>
+              <select
+                value={selectedGroup}
+                onChange={e => setSelectedGroup(e.target.value)}
+                style={{
+                  padding: '5px 10px', borderRadius: 6,
+                  border: '0.5px solid var(--color-border-secondary)',
+                  background: 'var(--color-background-primary)',
+                  color: 'var(--color-text-primary)',
+                  fontSize: 13, cursor: 'pointer',
+                }}
+              >
+                {groups.map(g => (
+                  <option key={g} value={g}>Group {g}</option>
+                ))}
+              </select>
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 5 }}>
+              {selectedGroupMatches.map(m => (
+                <GroupMatchRow key={m.id} m={m} results={results} />
+              ))}
+            </div>
+          </div>
         </div>
       )}
-
-      <CountryFilter results={results} qualifiedTeams={qualifiedTeams} koResults={koResults} />
     </div>
   );
 }
