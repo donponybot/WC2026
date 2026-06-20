@@ -202,7 +202,13 @@ export default function Bracket({ results, qualifiedTeams = {}, koResults = {}, 
       .every(m => now >= new Date(m.kickoff).getTime());
     return groupsDone ? 'bracket' : 'groups';
   });
-  const [selectedGroup, setSelectedGroup] = useState('A');
+  const [selectedGroup, setSelectedGroup] = useState(() => {
+    const now = Date.now();
+    const next = MATCHES
+      .filter(m => m.stage === STAGE.GROUP && new Date(m.kickoff).getTime() > now)
+      .sort((a, b) => new Date(a.kickoff) - new Date(b.kickoff))[0];
+    return next?.group ?? 'A';
+  });
 
   const r32   = MATCHES.filter(m => m.stage === STAGE.R32);
   const r16   = MATCHES.filter(m => m.stage === STAGE.R16);
