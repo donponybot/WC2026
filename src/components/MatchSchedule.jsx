@@ -1,5 +1,5 @@
 import { t } from '../utils/i18n';
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { MATCHES, STAGE } from '../data/matches';
 import { resolveTeam } from '../utils/scoring';
 import FlagImg from './FlagImg';
@@ -45,7 +45,22 @@ export default function MatchSchedule({ results, qualifiedTeams, koResults = {},
   });
   const [editingMatch, setEditingMatch] = useState(null);
   const [editScore, setEditScore] = useState({ home: '', away: '' });
+  const [editingHighlights, setEditingHighlights] = useState(null);
+  const [highlightsInput, setHighlightsInput] = useState('');
   const [lineup, setLineup] = useState(null); // { team, match }
+  const dateGroupRefs = useRef({});
+
+  useEffect(() => {
+    const stageMates = filterStage === 'all' ? MATCHES : MATCHES.filter(m => m.stage === filterStage);
+    const dates = [...new Set(stageMates.map(m => m.date))].sort();
+    let targetDate = null;
+    for (const date of dates) {
+      const hasResult = stageMates.some(m => m.date === date && (results[m.id]?.isFinished || results[m.id]?.isLive));
+      if (hasResult) targetDate = date;
+    }
+    const el = dateGroupRefs.current[targetDate || dates[0]];
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, [filterStage]);
 
   const stages = ['all', ...Object.values(STAGE)];
   const filtered = filterStage === 'all' ? MATCHES : MATCHES.filter(m => m.stage === filterStage);
@@ -76,6 +91,21 @@ export default function MatchSchedule({ results, qualifiedTeams, koResults = {},
     setEditingMatch(null);
   }
 
+  function startEditHighlights(match) {
+    setEditingHighlights(match.id);
+    setHighlightsInput(results[match.id]?.highlightsUrl || '');
+  }
+
+  function saveHighlights(match) {
+    const result = results[match.id];
+    const url = highlightsInput.trim();
+    onResultOverride(match.id, {
+      ...result,
+      highlightsUrl: url || undefined,
+    });
+    setEditingHighlights(null);
+  }
+
   return (
     <div className="schedule-tab">
       <div className="filter-bar">
@@ -92,7 +122,7 @@ export default function MatchSchedule({ results, qualifiedTeams, koResults = {},
       </div>
 
       {Object.entries(byDate).map(([date, matches]) => (
-        <div key={date} className="date-group">
+        <div key={date} className="date-group" ref={el => { dateGroupRefs.current[date] = el; }}>
           <div className="date-header">{date}</div>
           <div className="match-list">
             {matches.map(match => {
@@ -109,12 +139,41 @@ export default function MatchSchedule({ results, qualifiedTeams, koResults = {},
               const now = Date.now();
               const kickoff = new Date(match.kickoff).getTime();
               const hasStarted = now >= kickoff;
+              const highlightsHref = result?.highlightsUrl ||
+                `https://www.youtube.com/results?search_query=${encodeURIComponent(
+                  `${homeTeam} vs ${awayTeam} World Cup 2026 highlights`
+                )}`;
 
               return (
                 <div key={match.id} className={`match-card ${result?.isLive ? 'live' : ''} ${result?.isFinished ? 'finished' : ''}`}>
-                  <span className="stage-badge" style={{ background: STAGE_COLORS[match.stage] }}>
-                    {STAGE_LABELS(lang)[match.stage]}
-                  </span>
+                  <div className="match-card-header">
+                    <span className="stage-badge" style={{ background: STAGE_COLORS[match.stage] }}>
+                      {STAGE_LABELS(lang)[match.stage]}
+                    </span>
+                    <div className="match-card-meta-right">
+                      {match.venue && <span className="venue">📍 {match.venue}</span>}
+                      {UK_TV[match.id] && (
+                        <span className="tv-badges">
+                          {UK_TV[match.id].channels.map(ch => {
+                            const info = UK_CHANNELS[ch];
+                            if (!info) return null;
+                            return (
+                              <a
+                                key={ch}
+                                href={info.link}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="tv-badge-link"
+                                title={`Watch on ${ch}`}
+                              >
+                                <img src={info.logo} alt={ch} className="tv-badge-logo" />
+                              </a>
+                            );
+                          })}
+                        </span>
+                      )}
+                    </div>
+                  </div>
 
                   <div className="match-row">
                     <span
@@ -174,34 +233,50 @@ export default function MatchSchedule({ results, qualifiedTeams, koResults = {},
                     </span>
                   </div>
 
-                  <div className="match-meta">
-                    <span className="venue">📍 {t(lang,'venue')}: {match.venue}</span>
-                    {UK_TV[match.id] && (
-                      <span className="tv-badges">
-                        {UK_TV[match.id].channels.map(ch => {
-                          const info = UK_CHANNELS[ch];
-                          if (!info) return null;
-                          return (
-                            <a
-                              key={ch}
-                              href={info.link}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="tv-badge-link"
-                              title={`Watch on ${ch}`}
-                            >
-                              <img src={info.logo} alt={ch} className="tv-badge-logo" />
-                            </a>
-                          );
-                        })}
-                      </span>
-                    )}
-                    {isAdmin && !isEditing && (
-                      <button className="btn-edit-score" onClick={() => startEdit(match)}>
-                        ✏️ Score
-                      </button>
-                    )}
-                  </div>
+                  {(result?.isFinished || isAdmin) && (
+                    <div className="match-footer">
+                      <div className="match-footer-left">
+                        {result?.isFinished && editingHighlights !== match.id && (
+                          <a
+                            className="highlights-link"
+                            href={highlightsHref}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            ▶ Highlights
+                          </a>
+                        )}
+                        {isAdmin && result?.isFinished && editingHighlights === match.id && (
+                          <div className="highlights-edit">
+                            <input
+                              type="url"
+                              placeholder="YouTube URL (blank = auto search)"
+                              value={highlightsInput}
+                              onChange={e => setHighlightsInput(e.target.value)}
+                            />
+                            <button className="btn-save" onClick={() => saveHighlights(match)}>✓</button>
+                            <button className="btn-cancel" onClick={() => setEditingHighlights(null)}>✕</button>
+                          </div>
+                        )}
+                      </div>
+                      <div className="match-footer-right">
+                        {isAdmin && result?.isFinished && editingHighlights !== match.id && (
+                          <button
+                            className="btn-edit-highlights"
+                            onClick={() => startEditHighlights(match)}
+                            title="Set highlights URL"
+                          >
+                            🔗
+                          </button>
+                        )}
+                        {isAdmin && !isEditing && (
+                          <button className="btn-edit-score" onClick={() => startEdit(match)}>
+                            ✏️ Score
+                          </button>
+                        )}
+                      </div>
+                    </div>
+                  )}
                 </div>
               );
             })}

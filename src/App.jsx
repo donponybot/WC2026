@@ -37,6 +37,8 @@ function AppInner() {
   const [loading, setLoading] = useState(true);
   const [fbError, setFbError] = useState(null);
   const [apiError, setApiError] = useState(null);
+  const [saveError, setSaveError] = useState(null);
+  const saveErrorTimer = useRef(null);
 
   const playersRef = useRef(players);
   const resultsRef = useRef(results);
@@ -113,29 +115,47 @@ function AppInner() {
     }
   }
 
+  function showSaveError(msg) {
+    setSaveError(msg);
+    clearTimeout(saveErrorTimer.current);
+    saveErrorTimer.current = setTimeout(() => setSaveError(null), 5000);
+  }
+
   // Player CRUD
   async function addPlayer(name, initials, password) {
     const id = `p_${Date.now()}`;
     const passwordHash = await hashPassword(password);
-    await savePlayers([...playersRef.current, { id, name, initials, passwordHash, champion: null, predictions: {}, lang: 'en' }]);
+    try {
+      await savePlayers([...playersRef.current, { id, name, initials, passwordHash, champion: null, predictions: {}, lang: 'en' }]);
+    } catch (e) { showSaveError(e.message); }
   }
   async function removePlayer(id) {
-    await savePlayers(playersRef.current.filter(p => p.id !== id));
+    try {
+      await savePlayers(playersRef.current.filter(p => p.id !== id));
+    } catch (e) { showSaveError(e.message); }
   }
   async function updatePlayer(id, updates) {
-    await savePlayers(playersRef.current.map(p => p.id === id ? { ...p, ...updates } : p));
+    try {
+      await savePlayers(playersRef.current.map(p => p.id === id ? { ...p, ...updates } : p));
+    } catch (e) { showSaveError(e.message); }
   }
   async function setPrediction(playerId, matchId, prediction) {
-    await savePlayers(playersRef.current.map(p =>
-      p.id !== playerId ? p : { ...p, predictions: { ...p.predictions, [matchId]: prediction } }
-    ));
+    try {
+      await savePlayers(playersRef.current.map(p =>
+        p.id !== playerId ? p : { ...p, predictions: { ...p.predictions, [matchId]: prediction } }
+      ));
+    } catch (e) { showSaveError('Your pick could not be saved. Please try again.'); }
   }
   async function handleResultOverride(matchId, r) {
-    await saveOneResult(matchId, { ...r, manualOverride: true });
+    try {
+      await saveOneResult(matchId, { ...r, manualOverride: true });
+    } catch (e) { showSaveError(e.message); }
   }
   async function handleRestore(restoredPlayers, restoredResults) {
-    await savePlayers(restoredPlayers);
-    await saveResults(restoredResults);
+    try {
+      await savePlayers(restoredPlayers);
+      await saveResults(restoredResults);
+    } catch (e) { showSaveError(e.message); }
   }
 
   const leaderboard = players
@@ -230,6 +250,13 @@ function AppInner() {
       {showAdminModal && <AdminModal onLogin={handleAdminLogin} onClose={() => setShowAdminModal(false)} lang={lang} />}
       {showPlayerModal && <PlayerLoginModal players={players} onLogin={handlePlayerLogin} onClose={() => setShowPlayerModal(false)} lang={lang} />}
       {showApiKeyModal && <ApiKeyModal onClose={() => setShowApiKeyModal(false)} onSave={pollScores} lang={lang} />}
+
+      {saveError && (
+        <div className="save-error-toast" role="alert">
+          ⚠️ {saveError}
+          <button className="save-error-dismiss" onClick={() => setSaveError(null)}>✕</button>
+        </div>
+      )}
     </div>
   );
 }
