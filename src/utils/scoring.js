@@ -4,15 +4,18 @@ import { STAGE, GROUP_TEAMS, MATCHES } from '../data/matches';
 
 export function scoreMatch(prediction, result, stage) {
   if (!prediction || !result || result.homeScore == null || result.awayScore == null) return 0;
-  const actualPick =
-    result.homeScore > result.awayScore ? 'home' :
-    result.homeScore < result.awayScore ? 'away' : 'draw';
+  // penWinner overrides score comparison — used when match goes to penalties
+  const actualPick = result.penWinner ||
+    (result.homeScore > result.awayScore ? 'home' :
+     result.homeScore < result.awayScore ? 'away' : 'draw');
   let pts = 0;
   if (stage === STAGE.GROUP) {
     if (prediction.pick === actualPick) pts += 2;
   } else {
     if (prediction.pick === actualPick) pts += 2;
+    // No score bonus when penalties decided the match — score stays level at FT/AET
     if (
+      !result.penWinner &&
       prediction.homeScore != null && prediction.awayScore != null &&
       Number(prediction.homeScore) === result.homeScore &&
       Number(prediction.awayScore) === result.awayScore
@@ -109,12 +112,18 @@ export function buildKnockoutResults(results, qualifiedTeams) {
       const r = results?.[m.id];
       if (!r?.isFinished || r.homeScore == null || !homeTeam || !awayTeam) continue;
 
-      ko[m.id] = {
-        winner:   r.homeScore > r.awayScore ? homeTeam : awayTeam,
-        loser:    r.homeScore > r.awayScore ? awayTeam : homeTeam,
-        homeTeam,
-        awayTeam,
-      };
+      let winner, loser;
+      if (r.penWinner) {
+        winner = r.penWinner === 'home' ? homeTeam : awayTeam;
+        loser  = r.penWinner === 'home' ? awayTeam : homeTeam;
+      } else if (r.homeScore !== r.awayScore) {
+        winner = r.homeScore > r.awayScore ? homeTeam : awayTeam;
+        loser  = r.homeScore > r.awayScore ? awayTeam : homeTeam;
+      } else {
+        continue; // Level after FT/AET with no penWinner set yet
+      }
+
+      ko[m.id] = { winner, loser, homeTeam, awayTeam };
     }
   }
 
