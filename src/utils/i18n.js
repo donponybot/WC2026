@@ -69,8 +69,8 @@ export const TRANSLATIONS = {
     pointsKey: 'Points Key',
     pts5: 'Champion prediction',
     pts2group: 'Group stage – correct result',
-    pts2ko: 'Knockout – correct winner',
-    pts3ko: 'Knockout – correct score',
+    pts2ko: 'Knockout – correct winner (FT / AET / penalties)',
+    pts3ko: 'Knockout – correct score at FT or AET',
     noPlayersLb: 'No players added yet.',
 
     // Bracket
@@ -101,8 +101,8 @@ export const TRANSLATIONS = {
     groupRuleTitle: '⚽ Group Stage',
     groupRuleDesc: 'For each group stage match, predict: Home Win, Draw, or Away Win.',
     knockoutRuleTitle: '⚔️ Knockout Stage',
-    knockoutRuleDesc: 'Pick the winner AND optionally predict the exact final score.',
-    knockoutRuleNote: 'Both bonuses can be earned on the same match (5 pts max per knockout game).',
+    knockoutRuleDesc: 'Pick the winner AND optionally predict the exact score. The winner is whoever wins after full time, extra time, or on penalties.',
+    knockoutRuleNote: 'Both bonuses can be earned on the same match (5 pts max). If a match goes to penalties, predicting the level score correctly still earns 3 pts — plus 2 pts if you also picked the right penalty winner.',
     deadlineTitle: '⏰ Deadline Rules',
     deadlineRule1: 'All predictions must be submitted before the morning of each match day.',
     deadlineRule2: 'The app automatically locks each match cell at its individual kickoff time.',
@@ -211,8 +211,8 @@ export const TRANSLATIONS = {
     pointsKey: 'Puntuación',
     pts5: 'Predicción de campeón',
     pts2group: 'Fase de grupos – resultado correcto',
-    pts2ko: 'Eliminatoria – ganador correcto',
-    pts3ko: 'Eliminatoria – marcador exacto',
+    pts2ko: 'Eliminatoria – ganador correcto (90\' / prórroga / penaltis)',
+    pts3ko: 'Eliminatoria – marcador exacto al 90\' o prórroga',
     noPlayersLb: 'Aún no hay jugadores.',
 
     // Bracket
@@ -243,8 +243,8 @@ export const TRANSLATIONS = {
     groupRuleTitle: '⚽ Fase de Grupos',
     groupRuleDesc: 'Para cada partido de grupos predice: Victoria Local, Empate o Victoria Visitante.',
     knockoutRuleTitle: '⚔️ Fase Eliminatoria',
-    knockoutRuleDesc: 'Elige el ganador Y opcionalmente predice el marcador exacto.',
-    knockoutRuleNote: 'Ambos bonos se pueden obtener en el mismo partido (máx. 5 pts por partido eliminatorio).',
+    knockoutRuleDesc: 'Elige el ganador Y opcionalmente predice el marcador exacto. El ganador es quien gane al final del tiempo reglamentario, prórroga o en penaltis.',
+    knockoutRuleNote: 'Ambos bonos se pueden obtener en el mismo partido (máx. 5 pts). Si hay penaltis, predecir el marcador igualado sigue dando 3 pts — más 2 pts si también elegiste al ganador en la tanda.',
     deadlineTitle: '⏰ Plazos',
     deadlineRule1: 'Todas las predicciones deben enviarse antes de la mañana de cada jornada.',
     deadlineRule2: 'La app bloquea automáticamente cada celda al inicio del partido.',
