@@ -13,9 +13,7 @@ export function scoreMatch(prediction, result, stage) {
     if (prediction.pick === actualPick) pts += 2;
   } else {
     if (prediction.pick === actualPick) pts += 2;
-    // No score bonus when penalties decided the match — score stays level at FT/AET
     if (
-      !result.penWinner &&
       prediction.homeScore != null && prediction.awayScore != null &&
       Number(prediction.homeScore) === result.homeScore &&
       Number(prediction.awayScore) === result.awayScore
